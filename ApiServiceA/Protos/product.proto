@@ -1,0 +1,22 @@
+syntax = 'proto3';
+
+option csharp_namespace = "GrpcServiceB";
+
+package product;
+
+import "google/protobuf/empty.proto";
+
+// Định nghĩa đối tượng Product
+message Product {
+  int32 id = 1;
+  string name = 2;
+  float price = 3;
+}
+
+message ProductReply  {
+  repeated Product products = 1;
+}
+
+service ProductService {
+  rpc GetProducts (google.protobuf.Empty) returns (ProductReply);
+}

@@ -1,6 +1,8 @@
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 using GrpcServiceB;
+
 namespace ApiServiceA.Controllers
 {
     [ApiController]
@@ -17,6 +19,7 @@ namespace ApiServiceA.Controllers
 
             return Ok(reply.Message);
         }
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser(User user)
         {
@@ -26,7 +29,15 @@ namespace ApiServiceA.Controllers
             var response = await client.CreateUserAsync(user);
 
             return Ok(response);
+        }
 
+        [HttpGet("getProducts")]
+        public async Task<IActionResult> GetProducts()
+        {
+            using var channel = GrpcChannel.ForAddress("http://localhost:5207");
+            var client = new ProductService.ProductServiceClient(channel);
+            var response = await client.GetProductsAsync(new Empty());
+            return Ok(response);
         }
     }
 }

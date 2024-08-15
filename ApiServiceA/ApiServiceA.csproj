@@ -11,9 +11,11 @@
         <PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
         <PackageReference Include="Grpc.Tools" Version="2.65.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+
         <Protobuf Include="Protos/greet.proto" GrpcServices="Client" />
         <Protobuf Include="Protos/user.proto" GrpcServices="Client" />
-
+        <Protobuf Include="Protos/product.proto" GrpcServices="Client"/>
     </ItemGroup>
+    
 
 </Project>
