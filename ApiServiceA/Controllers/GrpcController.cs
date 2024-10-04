@@ -9,10 +9,10 @@ namespace ApiServiceA.Controllers
     [Route("[controller]")]
     public class GrpcController : ControllerBase
     {
-        [HttpGet("sayhello/{name}")]
+        [HttpGet("SayHello/{name}")]
         public async Task<IActionResult> SayHello(string name)
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:5207"); // URL của Service B
+            using var channel = GrpcChannel.ForAddress("http://service-b-lb:5207"); // URL của Service B
             var client = new Greeter.GreeterClient(channel);
 
             var reply = await client.SayHelloAsync(new HelloRequest { Name = name });
@@ -23,7 +23,7 @@ namespace ApiServiceA.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser(User user)
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:5207");
+            using var channel = GrpcChannel.ForAddress("http://service-b-lb:5207");
             var client = new UserService.UserServiceClient(channel);
 
             var response = await client.CreateUserAsync(user);
@@ -34,7 +34,7 @@ namespace ApiServiceA.Controllers
         [HttpGet("getProducts")]
         public async Task<IActionResult> GetProducts()
         {
-            using var channel = GrpcChannel.ForAddress("http://localhost:5207");
+            using var channel = GrpcChannel.ForAddress("http://service-b-lb:5207");
             var client = new ProductService.ProductServiceClient(channel);
             var response = await client.GetProductsAsync(new Empty());
             return Ok(response);
